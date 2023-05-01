@@ -1,42 +1,34 @@
 import userEvent from "@testing-library/user-event";
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+
 function User() {
   const [users, setUsers] = useState([]);
 
+  const [isLoading,setLoading] = useState(false)
+
   useEffect(() => {
-    setUsers([
-      {
-        id: 1,
-        username: "Person1",
-        email: "person1@gmail.com",
-        country: "India",
-        state: "Tamil Nadu",
-        city: "Coimbatore",
-        phone: 8524563254,
-        dob: "24-09-1998",
-        gender: "Male",
-      },
-      {
-        id: 2,
-        username: "Person",
-        email: "person2@gmail.com",
-        country: "India",
-        state: "Tamil Nadu",
-        city: "Chennai",
-        phone: 8524567424,
-        dob: "24-09-1997",
-        gender: "Female",
-      },
-    ]);
+    fetchData()
   }, []);
+
+  let fetchData = async()=>{
+    try {
+      setLoading(true)
+      const users = await axios.get("https://644efb15b61a9f0c4d1a7e1a.mockapi.io/users")
+      setUsers(users.data)
+      setLoading(false)
+    } catch (error) {
+      alert("Error")
+    }
+  }
 
   let deleteUser = () =>{
     const result = window.confirm("Are you sure want to delete?")
 
-    if (result){
+    if (result){  
       alert ("Deleted")
     }
   }
@@ -53,7 +45,9 @@ function User() {
         </Link>
       </div>
 
-      <div class="card shadow mb-4">
+      {
+        isLoading ? <span>Loading..</span> :
+        <div class="card shadow mb-4">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">User Details</h6>
         </div>
@@ -98,7 +92,7 @@ function User() {
                   return (
                     <tr>
                       <td>{user.id}</td>
-                      <td>{user.username}</td>
+                      <td>{user.name}</td>
                       <td>{user.email}</td>
                       <td>{user.country}</td>
                       <td>{user.state}</td>
@@ -109,18 +103,18 @@ function User() {
                       <td>
                         <Link
                           to={`/user/${user.id}`}
-                          className="btn btn-warning mr-2"
+                          className="btn btn-warning mr-2 mt-2 "
                         >
                           View
                         </Link>
                         <Link
                           to={`/edit/${user.id}`}
-                          className="btn btn-dark mr-2"
+                          className="btn btn-dark mr-2 mt-2"
                         >
                           Edit
                         </Link>
 
-                        <button onClick={()=> deleteUser()} className="btn btn-danger">Delete</button>
+                        <button onClick={()=> deleteUser()} className="btn btn-danger mt-2">Delete</button>
                       </td>
                     </tr>
                   );
@@ -130,6 +124,7 @@ function User() {
           </div>
         </div>
       </div>
+      }
     </div>
   );
 }

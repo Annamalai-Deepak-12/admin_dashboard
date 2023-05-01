@@ -22,7 +22,7 @@ function Sidebar() {
       <hr class="sidebar-divider my-0" />
 
       <li class="nav-item active">
-        <Link to={"/dashboard"} class="nav-link">
+        <Link to={"/portal/dashboard"} class="nav-link">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span>
         </Link>
@@ -35,7 +35,7 @@ function Sidebar() {
       <li class="nav-item">
         <Link
           class="nav-link collapsed"
-          to={"/user"}
+          to={"/portal/user"}
           data-toggle="collapse"
           data-target="#collapseTwo"
           aria-expanded="true"

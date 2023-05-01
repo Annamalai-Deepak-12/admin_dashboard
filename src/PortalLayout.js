@@ -1,7 +1,7 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Sidebar from './sidebar';
-import Topbar from './topbar';
+import React from "react";
+import Sidebar from "./sidebar";
+import Topbar from "./topbar";
+import { Outlet } from "react-router-dom";
 
 function PortalLayout() {
   return (
@@ -10,8 +10,8 @@ function PortalLayout() {
       <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
           <Topbar />
-    <Outlet/>
-    </div>
+          <Outlet />
+        </div>
       </div>
     </div>
   )
